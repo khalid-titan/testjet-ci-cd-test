@@ -4,9 +4,11 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: setup node
-        uses: actions/setup-node
-      - name: install testjet-cli-cmd
-        run: npm install -g testjet-cli-cdm
-      - name: write my name
-        run: testjet-cli-cmd wr khalid
+      - name: Install node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14
+      - name: Install Testjet cli tool
+        run: npm install -g testjet-cli-cmd
+      - name: Write my name
+        run: testjet-cli-cmd write khalid
