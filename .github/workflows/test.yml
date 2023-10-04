@@ -9,6 +9,6 @@ jobs:
         with:
           node-version: 14
       - name: Install Testjet cli tool
-        run: npm install -g testjet-cli-cmd
+        run: npm install -g testjet-cli-cmd@1.0.0
       - name: Write my name
         run: testjet-cli-cmd write khalid
