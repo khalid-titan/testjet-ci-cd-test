@@ -11,4 +11,4 @@ jobs:
       - name: Install Testjet cli tool
         run: npm install -g tj-cli-cmd@1.0.0
       - name: Write my name
-        run: testjet-cli-cmd write khalid
+        run: tj-cli-cmd write khalid
