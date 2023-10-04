@@ -1,0 +1,12 @@
+name: Test with Testjet
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: setup node
+        uses: actions/setup-node
+      - name: install testjet-cli-cmd
+        run: npm install -g testjet-cli-cdm
+      - name: write my name
+        run: testjet-cli-cmd wr khalid
