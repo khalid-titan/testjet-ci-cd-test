@@ -8,7 +8,21 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 14
+
       - name: Install Testjet cli tool
-        run: npm install -g tj-cli-cmd@1.0.0
+        run: npm install -g tj-cli-cmd@1.1.0
+
       - name: Write my name
         run: tj-cli-cmd write khalid
+
+      - name: Get Test run details
+        id: testjet_test
+        run: |
+          echo "isTestPassed=$(tj-cli-cmd get-test-run 861)\n" >> $GITHUB_OUTPUT
+
+      - name: Exit if the test failed
+        if: steps.testjet_test.outputs.isTestPassed != 'true'
+        run: exit 1
+
+      - name: Check if test has been passed
+        run: echo "This will be printed only if the test has been passed"
