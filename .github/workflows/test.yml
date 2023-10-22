@@ -1,13 +1,27 @@
 name: Test with Testjet
-on: push
+
+on:
+  - push
+  - workflow_dispatch
+
 jobs:
   test:
+    env:
+      HOST: http://localhost:3000
+      TOKEN: ${{ secrest.BEARER_TOKEN }}
+
     runs-on: ubuntu-latest
     steps:
       - name: Install node.js
         uses: actions/setup-node@v3
         with:
           node-version: 14
+
+      - name: Print host
+        run: echo "${{ env.HOST }}"
+
+      - name: Print secret
+        run: echo "${{ env.TOKEN }}"
 
       - name: Install Testjet cli tool
         run: npm install -g tj-cli-cmd@1.1.0
@@ -19,6 +33,9 @@ jobs:
         id: testjet_test
         run: |
           echo "isTestPassed=$(tj-cli-cmd get-test-run 861)\n" >> $GITHUB_OUTPUT
+
+      - name: Print result
+        run: echo "${{ steps.testjet_test.outputs.isTestPassed }}"
 
       - name: Exit if the test failed
         if: steps.testjet_test.outputs.isTestPassed != 'true'
