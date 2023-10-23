@@ -41,7 +41,6 @@ jobs:
       #   if: steps.testjet_test.outputs.isTestPassed != 'true'
       #   run: exit 1
 
-
       # - name: Check if test has been passed
       #   run: echo "This will be printed only if the test has been passed"
 
