@@ -24,22 +24,34 @@ jobs:
         run: echo "${{ env.TOKEN }}"
 
       - name: Install Testjet cli tool
-        run: npm install -g tj-cli-cmd@1.1.0
+        run: npm install -g tj-cli-cmd@1.1.2
 
       - name: Write my name
         run: tj-cli-cmd write khalid
 
-      - name: Get Test run details
-        id: testjet_test
-        run: |
-          echo "isTestPassed=$(tj-cli-cmd get-test-run 861)\n" >> $GITHUB_OUTPUT
+      # - name: Get Test run details
+      #   id: testjet_test
+      #   run: |
+      #     echo "isTestPassed=$(tj-cli-cmd get-test-run 861)\n" >> $GITHUB_OUTPUT
 
-      - name: Print result
-        run: echo "${{ steps.testjet_test.outputs.isTestPassed }}"
+      # - name: Print result
+      #   run: echo "${{ steps.testjet_test.outputs.isTestPassed }}"
 
-      - name: Exit if the test failed
-        if: steps.testjet_test.outputs.isTestPassed != 'true'
-        run: exit 1
+      # - name: Exit if the test failed
+      #   if: steps.testjet_test.outputs.isTestPassed != 'true'
+      #   run: exit 1
 
-      - name: Check if test has been passed
-        run: echo "This will be printed only if the test has been passed"
+      # - name: Check if test has been passed
+      #   run: echo "This will be printed only if the test has been passed"
+      
+      - name: Run test on the cloud
+        run: tj-cli-cmd clr --token=${{env.TOKEN}} 26
+
+  
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+
+      - name: Print deployment logs
+        run: echo "This will be printed only if the build job is successful"
