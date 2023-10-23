@@ -48,10 +48,10 @@ jobs:
       - name: Run test on the cloud
         id: testjet_test
         run: |
-          echo "returnOutput=$(tj-cli-cmd clr --token=${{env.TOKEN}} 26)\n" >> $GITHUB_OUTPUT
+          tj-cli-cmd clr --token=${{env.TOKEN}} 26
         
       - name: Print result
-        run: echo "${{ steps.testjet_test.outputs.returnOutput }}"
+        run: echo "hello"
 
   
   deploy:
