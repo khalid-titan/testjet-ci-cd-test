@@ -24,7 +24,7 @@ jobs:
         run: echo "${{ env.TOKEN }}"
 
       - name: Install Testjet cli tool
-        run: npm install -g tj-cli-cmd@1.1.2
+        run: npm install -g tj-cli-cmd
 
       - name: Write my name
         run: tj-cli-cmd write khalid
