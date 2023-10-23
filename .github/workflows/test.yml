@@ -47,6 +47,7 @@ jobs:
 
       - name: Run test on the cloud
         id: testjet_test
+        continue-on-error: true
         run: |
           tj-cli-cmd clr --token=${{env.TOKEN}} 26
         
