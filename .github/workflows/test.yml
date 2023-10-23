@@ -45,7 +45,12 @@ jobs:
       #   run: echo "This will be printed only if the test has been passed"
 
       - name: Run test on the cloud
-        run: tj-cli-cmd clr --token=${{env.TOKEN}} 26
+        id: testjet_test
+        run: |
+          echo "returnOutput=$(tj-cli-cmd clr --token=${{env.TOKEN}} 26)\n" >> $GITHUB_OUTPUT
+        
+      - name: Print result
+        run: echo "${{ steps.testjet_test.outputs.returnOutput }}"
 
   
   deploy:
