@@ -9,7 +9,7 @@ jobs:
     steps:
       - checkout
       - run:
-          command: npm i -g tj-cli-cmd
+          command: sudo npm i -g tj-cli-cmd
           name: Install cli tool
       - run:
           command: tj-cli-cmd write khalid
