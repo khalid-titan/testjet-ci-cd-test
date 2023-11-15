@@ -5,56 +5,25 @@ on:
   - workflow_dispatch
 
 jobs:
-  test:
-    env:
-      HOST: http://localhost:3000
-      TOKEN: ${{ secrets.BEARER_TOKEN }}
-
+  build:
     runs-on: ubuntu-latest
-    # continue-on-error: true
     steps:
-      - name: Install node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
 
-      - name: Print host
-        run: echo "${{ env.HOST }}"
-
-      - name: Print secret
-        run: echo "${{ env.TOKEN }}"
-
-      - name: Install Testjet cli tool
-        run: npm install -g tj-cli-cmd
-
-      - name: Write my name
-        run: tj-cli-cmd write khalid
-
-      # - name: Get Test run details
-      #   id: testjet_test
-      #   run: |
-      #     echo "isTestPassed=$(tj-cli-cmd get-test-run 861)\n" >> $GITHUB_OUTPUT
-
-      # - name: Print result
-      #   run: echo "${{ steps.testjet_test.outputs.isTestPassed }}"
-
-      # - name: Exit if the test failed
-      #   if: steps.testjet_test.outputs.isTestPassed != 'true'
-      #   run: exit 1
-
-      # - name: Check if test has been passed
-      #   run: echo "This will be printed only if the test has been passed"
-
-
-      - name: Run test on the cloud
-        id: testjet_test
-        run: |
-          tj-cli-cmd clr --token=${{env.TOKEN}} 26
-        
-      - name: Print result
-        run: echo "hello"
-
+      - name: Print Build logs
+        run: echo "Build successful"
   
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - run: npm install -g tj-cli-cmd
+      - run: tj-cli-cmd clr --token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTJkNzE3NDJjNGI0MmNjMWM0NWMxNjAiLCJlbWFpbCI6ImtoYWxpZEB5b3BtYWlsLmNvbSIsInN0YXR1cyI6MSwicm9sZXMiOnsicm9sZSI6ImFkbWluIiwibmFtZSI6IkFETUlOIiwiZGVzY3JpcHRpb24iOiIiLCJhY2Nlc3NfaWQiOnsidHlwZSI6WyJDcmVhdGUiLCJVcGRhdGUiLCJSZWFkIiwiRGVsZXRlIl0sImRlc2NyaXB0aW9uIjoiIiwidGl0bGUiOiJDUlVEIn19LCJwcm9maWxlIjpudWxsLCJzdWJzY3JpcHRpb24iOnsiY29uc3VtZWRfcGxhbiI6eyJwcm9qZWN0X2xpbWl0IjowLCJ0ZXN0X2Nhc2VfbGltaXQiOjAsInRlc3RfcnVuX2xpbWl0IjowfSwic3RhdHVzX2NvZGUiOjJ9LCJpbnZpdGVkX2J5IjpudWxsLCJ2ZXJpZmljYXRpb24iOnsiZW1haWxfdmVyaWZpZWQiOnRydWUsImVtYWlsX3ZyZl90b2tlbiI6bnVsbH0sImlhdCI6MTcwMDAyNTk2OCwiZXhwIjoxNzAwMDU0NzY4fQ.uuKP42OGxiXR4EMIGZ_w81EltNwuxYjUE_ZAdWVsSTI --pass-percentage=50 42
+
+            
+
   deploy:
     runs-on: ubuntu-latest
     needs: test
