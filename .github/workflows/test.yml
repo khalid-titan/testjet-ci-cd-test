@@ -12,9 +12,19 @@ jobs:
       - name: Print Build logs
         run: echo "Build successful"
 
-  deploy:
+  test:
     runs-on: ubuntu-latest
     needs: build
+    steps:
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - run: npm install -g tj-cli-cmd
+      - run: tj-cli-cmd clr --token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTJkNzE3NDJjNGI0MmNjMWM0NWMxNjAiLCJlbWFpbCI6ImtoYWxpZEB5b3BtYWlsLmNvbSIsInN0YXR1cyI6MSwicm9sZXMiOnsicm9sZSI6ImFkbWluIiwibmFtZSI6IkFETUlOIiwiZGVzY3JpcHRpb24iOiIiLCJhY2Nlc3NfaWQiOnsidHlwZSI6WyJDcmVhdGUiLCJVcGRhdGUiLCJSZWFkIiwiRGVsZXRlIl0sImRlc2NyaXB0aW9uIjoiIiwidGl0bGUiOiJDUlVEIn19LCJwcm9maWxlIjpudWxsLCJzdWJzY3JpcHRpb24iOnsiY29uc3VtZWRfcGxhbiI6eyJwcm9qZWN0X2xpbWl0IjowLCJ0ZXN0X2Nhc2VfbGltaXQiOjAsInRlc3RfcnVuX2xpbWl0IjowfSwic3RhdHVzX2NvZGUiOjJ9LCJpbnZpdGVkX2J5IjpudWxsLCJ2ZXJpZmljYXRpb24iOnsiZW1haWxfdmVyaWZpZWQiOnRydWUsImVtYWlsX3ZyZl90b2tlbiI6bnVsbH0sImlhdCI6MTcwMDYzMTI2MiwiZXhwIjoxNzAwNjYwMDYyfQ.9A_O4kezFIkpPwcFEcc_Ec07cQblYkLLU6o0m2bfzBI --pass-percentage=100 42 
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
     steps:
 
       - name: Print deployment logs
